@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/blog-reader-backend.iml" filepath="$PROJECT_DIR$/.idea/modules/blog-reader-backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/blog-reader-backend-build.iml" filepath="$PROJECT_DIR$/.idea/modules/blog-reader-backend-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../blog-reader-frontend/blog-reader-frontend.iml" filepath="$PROJECT_DIR$/../blog-reader-frontend/blog-reader-frontend.iml" />
     </modules>
   </component>
 </project>
