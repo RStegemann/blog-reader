@@ -1,14 +1,16 @@
 import {React, Component} from "react";
+import BlogPost from "./blogPost";
 
-class BlogPostList extends Component{
-    state = {
-        blogPosts: []
-    }
+export default class BlogPostList extends Component{
 
     render(){
         return (
             <div>
-                <ul>{this.state.blogPosts.map(blogPost => <li key={blogPost.id}>{blogPost.title}</li>)}</ul>
+                {this.props.blogPosts.map(blogPost =>
+                    <BlogPost
+                        key={blogPost.id}
+                        blogPost={blogPost}
+                    />)}
             </div>
         )
     }

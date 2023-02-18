@@ -1,17 +1,14 @@
-Connect();
-function Connect()
+export default function Connect(address, openHandler, closeHandler, messageHandler)
 {
-    const exampleSocket = new WebSocket("ws://localhost:8080");
+    const exampleSocket = new WebSocket(address);
     exampleSocket.onopen = (event) =>{
-        console.log("Connected.");
+        openHandler(event);
     }
     exampleSocket.onclose = (event) =>{
-        console.log("Disconnected.");
+        closeHandler(event);
     }
     exampleSocket.onmessage = (event) =>{
-        const obj = JSON.parse(event.data);
-        console.log(obj[0].wordCounts.toString())
-        //console.log(`Message received: ${event.data}`);
+        messageHandler(event);
     }
     waitForConnection(exampleSocket)
 }
