@@ -13,7 +13,7 @@ object Main {
   private val socketServer = WebSocketServer("localhost", 8080)
   @main def run(): Unit = {
     val wordpressObserver = WordpressObserver(
-      "https://www.thekey.academy/wp-json/wp/v2/posts?_fields=title,link,excerpt.rendered,content.rendered",
+      "https://www.thekey.academy/wp-json/wp/v2/posts?_fields=id,title,link,excerpt.rendered,content.rendered",
       5.seconds,
       5.seconds,
       handleObserverResponse)
