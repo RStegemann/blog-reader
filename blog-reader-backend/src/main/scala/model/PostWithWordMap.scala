@@ -8,12 +8,14 @@ import spray.json.{DefaultJsonProtocol, JsValue, RootJsonFormat}
 import scala.collection.mutable
 
 object MyJsonProtocol extends DefaultJsonProtocol{
-  implicit val postWithWordMapFormat: RootJsonFormat[PostWithWordMap] = jsonFormat5(PostWithWordMap.apply)
-  implicit val contentFormat: RootJsonFormat[RenderedString] = jsonFormat1(RenderedString.apply)
-  implicit val postFormat: RootJsonFormat[Post] = jsonFormat4(Post.apply)
+  implicit val postWithWordMapFormat: RootJsonFormat[PostWithWordMap] = jsonFormat6(PostWithWordMap.apply)
+  implicit val renderedStringFormat: RootJsonFormat[RenderedString] = jsonFormat1(RenderedString.apply)
+  implicit val postFormat: RootJsonFormat[Post] = jsonFormat5(Post.apply)
 }
 
-case class PostWithWordMap(wordCounts: List[(String, Int)], content:String, excerpt:String, link:String, title:String)
+case class PostWithWordMap(id: Int, wordCounts: List[(String, Int)], content:String, excerpt:String, link:String, title:String)
+case class Post(id:Int, content: RenderedString, excerpt: RenderedString, link: String, title:RenderedString)
+case class RenderedString(rendered: String)
 object PostWithWordMap{
   def fromJson(jsValue: JsValue): PostWithWordMap =
     import MyJsonProtocol._
@@ -21,7 +23,7 @@ object PostWithWordMap{
     val cleanedContent: Document = Jsoup.parse(post.content.rendered)
     val cleanedExcerpt: Document = Jsoup.parse(post.excerpt.rendered)
     val wordMap = generateWordmap(cleanedContent.text)
-    PostWithWordMap(wordMap.toList, cleanedContent.text, cleanedExcerpt.text, post.link, post.title.rendered)
+    PostWithWordMap(post.id, wordMap.toList, post.content.rendered, post.excerpt.rendered, post.link, post.title.rendered)
 
   private def generateWordmap(content: String): mutable.HashMap[String, Int] =
     val noPunctLowerCase: String = content.replaceAll("""\p{Punct}""", "").toLowerCase
@@ -34,5 +36,3 @@ object PostWithWordMap{
     })
     return wordMap
 }
-case class Post(content: RenderedString, excerpt: RenderedString, link: String, title:RenderedString)
-case class RenderedString(rendered: String)
