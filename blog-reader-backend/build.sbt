@@ -16,6 +16,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion,
   "com.typesafe.akka" %% "akka-http-spray-json" % AkkaHttpVersion
 )
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.4.5" % Runtime
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.2.0"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15" % Test
