@@ -7,7 +7,6 @@ import akka.stream.scaladsl.*
 import akka.http.scaladsl.model.*
 import akka.http.scaladsl.model.ws.*
 import akka.util.ByteString
-
 import scala.concurrent.Future
 
 object SocketClient {
@@ -27,7 +26,6 @@ object SocketClient {
 
     // send this as a message over the WebSocket
     val textMessage = TextMessage(message)
-    println("Message length: " ++ textMessage.text.length.toString)
     val outgoing = Source.single(textMessage)
     // flow to use (note: not re-usable!)
     val webSocketFlow = Http().webSocketClientFlow(WebSocketRequest(socketAddress))
@@ -51,9 +49,5 @@ object SocketClient {
         throw new RuntimeException(s"Connection failed: ${upgrade.response.status}")
       }
     }
-
-    // in a real application you would not side effect here
-    connected.onComplete(println)
-    closed.foreach(_ => println("closed"))
   }
 }

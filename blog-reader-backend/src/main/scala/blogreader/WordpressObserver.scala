@@ -5,17 +5,14 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{HttpRequest, HttpResponse}
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import spray.json.{JsValue, JsonParser}
-
 import java.util.concurrent.TimeoutException
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.FiniteDuration
-
-implicit val system : ActorSystem = ActorSystem()
 import system.dispatcher
+
 class WordpressObserver(requestLink: String, updateTimer: FiniteDuration, requestTimeout: FiniteDuration, responseHandler: (s: String) => Unit){
 
-  system.scheduler.scheduleAtFixedRate(FiniteDuration(0, java.util.concurrent.TimeUnit.SECONDS), FiniteDuration(5, java.util.concurrent.TimeUnit.SECONDS))(() => {
-    //socketServer.broadcast("Broadcasting message!")
+  system.scheduler.scheduleAtFixedRate(FiniteDuration(0, java.util.concurrent.TimeUnit.SECONDS), updateTimer)(() => {
     requestPosts
   })
 
@@ -25,6 +22,5 @@ class WordpressObserver(requestLink: String, updateTimer: FiniteDuration, reques
       responseFuture.flatMap(resp => Unmarshal(resp.entity).to[String]),
       requestTimeout
     )
-
     responseHandler(responseAsString)
 }

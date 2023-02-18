@@ -3,8 +3,12 @@ package websocketservice.actors
 import akka.actor.{Actor, ActorRef, Terminated}
 import akka.http.scaladsl.model.ws.TextMessage
 
+/**
+ * Companion-object for [[BroadcastGroup]]. Defines messages and keeps track of a list of all clients registered at the
+ * [[websocketservice.WebSocketServer]]
+ */
 object BroadcastGroup {
-  var clients: Set[ActorRef] = Set.empty
+  private var clients: Set[ActorRef] = Set.empty
   case object Join
   case object JoinAsBroadcaster
   case class SendMessage(message: TextMessage)

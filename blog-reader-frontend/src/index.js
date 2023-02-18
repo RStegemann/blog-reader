@@ -23,7 +23,7 @@ function OnSocketClosed(event){
 }
 function OnSocketMessageReceived(event){
     const parsedPosts = JSON.parse(event.data);
-    if(newPosts(blogPosts, parsedPosts)){
+    if(checkNewPosts(blogPosts, parsedPosts)){
         console.log("Rendering.");
         blogPosts = parsedPosts;
         root.render(
@@ -34,7 +34,7 @@ function OnSocketMessageReceived(event){
     }
 }
 
-function newPosts(blogPosts, parsedPosts){
+function checkNewPosts(blogPosts, parsedPosts){
     if(blogPosts === undefined || parsedPosts.length > blogPosts.length) return true;
     parsedPosts.forEach(parsedPost => {
         if (!(blogPosts.includes(parsedPost))) {

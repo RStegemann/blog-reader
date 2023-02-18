@@ -18,7 +18,7 @@ class Client(broadcastGroup: ActorRef) extends Actor{
     case SendBroadcast() => context.become(connectBroadcaster())
   }
 
-  def connected(outgoing: ActorRef): Receive = {
+  private def connected(outgoing: ActorRef): Receive = {
     broadcastGroup ! BroadcastGroup.Join
     {
       case BroadcastGroup.SendMessage(text) =>
@@ -26,7 +26,7 @@ class Client(broadcastGroup: ActorRef) extends Actor{
     }
   }
 
-  def connectBroadcaster(): Receive = {
+  private def connectBroadcaster(): Receive = {
     broadcastGroup ! BroadcastGroup.JoinAsBroadcaster
     {
       case IncomingMessage(text) =>
