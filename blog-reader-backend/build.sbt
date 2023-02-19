@@ -16,6 +16,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion,
   "com.typesafe.akka" %% "akka-http-spray-json" % AkkaHttpVersion
 )
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15" % "test"
 libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5"
 libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.4.5" % Runtime
 
@@ -23,4 +25,4 @@ libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15" % Test
 libraryDependencies += "io.circe" %% "circe-parser" % "0.14.4"
 libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.1.0"
-libraryDependencies += "org.jsoup" % "jsoup" % "1.15.3"
+libraryDependencies += "org.jsoup" % "jsoup" % "1.15.4"

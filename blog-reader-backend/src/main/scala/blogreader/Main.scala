@@ -36,8 +36,8 @@ object Main {
    * @param s JSON-String containing wordpress posts
    */
   private def handleObserverResponse(s: String): Unit =
-    val something = JsonParser(s)
-    val postArray: Array[JsValue] = something.convertTo[Array[JsValue]]
+    val parsedJson = JsonParser(s)
+    val postArray: Array[JsValue] = parsedJson.convertTo[Array[JsValue]]
     val postWithMapArray: Array[PostWithWordMap] = postArray.map(postJson => PostWithWordMap.fromJson(postJson))
     val json = postWithMapArray.toJson
     socketServer.sendBroadcastRequest(json.toString)

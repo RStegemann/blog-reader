@@ -1,8 +1,10 @@
 package model
 
+import blogreader.Util.generateWordmap
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import spray.json.{DefaultJsonProtocol, JsValue, RootJsonFormat}
+
 import scala.collection.mutable
 
 /**
@@ -61,20 +63,4 @@ object PostWithWordMap{
     val wordMap = generateWordmap(cleanedContent.text)
     PostWithWordMap(post.id, wordMap.toList, post.content.rendered, post.excerpt.rendered, post.link, post.title.rendered)
 
-  /**
-   * Generates a wordcount map for the given String by removing all punctuation characters, converting words
-   * to lowercase and adding them a Hashmap.
-   * @param content String to count words in
-   * @return [[mutable.HashMap]] containing all words and their count
-   */
-  private def generateWordmap(content: String): mutable.HashMap[String, Int] =
-    val noPunctLowerCase: String = content.replaceAll("""[\p{Punct}”“–]""", "").toLowerCase
-    val words: Array[String] = noPunctLowerCase.split(" ")
-    val wordMap: mutable.HashMap[String, Int] = mutable.HashMap()
-    words.foreach((word: String) =>{
-      if(!word.equals(""))
-        if (wordMap.contains(word)) wordMap(word) += 1
-        else wordMap.addOne(word, 1)
-    })
-    return wordMap
 }
