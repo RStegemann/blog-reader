@@ -4,7 +4,7 @@ import akka.actor.{Actor, ActorRef, Terminated}
 import akka.http.scaladsl.model.ws.TextMessage
 
 /**
- * Companion-object for [[BroadcastGroup]]. Defines messages and keeps track of a list of all clients registered at the
+ * Companion-object for [[BroadcastGroup]]. Defines message-types and keeps track of a list of all clients registered at the
  * [[websocketservice.WebSocketServer]]
  */
 object BroadcastGroup {
@@ -14,6 +14,9 @@ object BroadcastGroup {
   case class SendMessage(message: TextMessage)
 }
 
+/**
+ * Implements functionality for message events on BroadcastGroup actors.
+ */
 class BroadcastGroup extends Actor{
   import BroadcastGroup._
 

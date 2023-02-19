@@ -4,8 +4,6 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{HttpRequest, HttpResponse}
 import akka.http.scaladsl.unmarshalling.Unmarshal
-import spray.json.{JsValue, JsonParser}
-import java.util.concurrent.TimeoutException
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.FiniteDuration
 import system.dispatcher
