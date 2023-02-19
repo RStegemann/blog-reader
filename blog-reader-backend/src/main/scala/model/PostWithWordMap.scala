@@ -68,7 +68,7 @@ object PostWithWordMap{
    * @return [[mutable.HashMap]] containing all words and their count
    */
   private def generateWordmap(content: String): mutable.HashMap[String, Int] =
-    val noPunctLowerCase: String = content.replaceAll("""\p{Punct}""", "").toLowerCase
+    val noPunctLowerCase: String = content.replaceAll("""[\p{Punct}”“–]""", "").toLowerCase
     val words: Array[String] = noPunctLowerCase.split(" ")
     val wordMap: mutable.HashMap[String, Int] = mutable.HashMap()
     words.foreach((word: String) =>{
