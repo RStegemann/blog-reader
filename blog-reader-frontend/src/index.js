@@ -4,7 +4,9 @@ import './index.css';
 import App from './components/App';
 import Connect from './websocket';
 
+// Define root element
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// Declare blogPosts list
 let blogPosts;
 
 // Connect to websocket
@@ -28,13 +30,13 @@ function onSocketOpened(event){
  * @param event Event information, received from websocket
  */
 function OnSocketClosed(event){
-    // Failed to connect to websocket. Retrying after one second
-    Connect("ws://localhost:8080",
+    // Disconnected from websocket. Retrying after one second
+    setTimeout(Connect("ws://localhost:8080",
         onSocketOpened,
         OnSocketClosed,
         OnSocketMessageReceived,
         OnSocketError
-    );
+    ), 1000);
 }
 
 /**
@@ -42,13 +44,7 @@ function OnSocketClosed(event){
  * @param event Event information, received from websocket
  */
 function OnSocketError(event){
-    // Encountered error, some elaborate system might be applied here, but in this case we are just reconnecting.
-    Connect("ws://localhost:8080",
-        onSocketOpened,
-        OnSocketClosed,
-        OnSocketMessageReceived,
-        OnSocketError
-    );
+    // Encountered error, in the future some system might be applied here
 }
 
 /**
