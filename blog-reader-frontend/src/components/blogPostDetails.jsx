@@ -15,7 +15,7 @@ export default class BlogPostDetails extends Component{
         const {blogPost} = this.props;
         const safeHtml = DOMPurify.sanitize(blogPost.content)
         return(
-            <div>
+            <div data-testid='blogPostDetails'>
                 <h1><a href={blogPost.link}>{blogPost.title}</a></h1>
                 <div dangerouslySetInnerHTML={{__html:safeHtml}} />
             </div>

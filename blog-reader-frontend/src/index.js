@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/App';
-import Connect from './websocket';
+import App from './components/app';
+import {Connect, Disconnect} from './websocket';
 
 // Define root element
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -30,13 +30,6 @@ function onSocketOpened(event){
  * @param event Event information, received from websocket
  */
 function OnSocketClosed(event){
-    // Disconnected from websocket. Retrying after one second
-    setTimeout(Connect("ws://localhost:8080",
-        onSocketOpened,
-        OnSocketClosed,
-        OnSocketMessageReceived,
-        OnSocketError
-    ), 1000);
 }
 
 /**
@@ -44,7 +37,7 @@ function OnSocketClosed(event){
  * @param event Event information, received from websocket
  */
 function OnSocketError(event){
-    // Encountered error, in the future some system might be applied here
+    Disconnect();
 }
 
 /**

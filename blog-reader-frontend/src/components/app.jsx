@@ -9,7 +9,7 @@ import WordTable from "./wordTable";
  */
 export default class App extends Component{
     state={
-        selected: this.props.blogPosts[0] // Currently selected blogpost
+        selectedIndex: 0 // Currently selected blogpost index
     }
 
     /**
@@ -17,9 +17,9 @@ export default class App extends Component{
      * @param index Index of the Element in blogpost list
      */
     handleSelection = (index) =>{
-        const selected = this.props.blogPosts[index]
+        const selectedIndex = index
         this.setState( // Update state to change selected blogpost to the newly selected one
-            {selected}
+            {selectedIndex}
         )
     }
 
@@ -28,22 +28,22 @@ export default class App extends Component{
      * buttonList, Details page and wordTable
      */
     getBlogPostList = () =>{
-        if(this.props.blogPosts !== undefined){
+        if(this.props.blogPosts !== undefined && this.props.blogPosts.length > 0){
             return (
                 <React.Fragment>
-                    <div className="split left">
+                    <div className="split left" data-testid='postList'>
                         <BlogPostList blogPosts={this.props.blogPosts} handleSelection={this.handleSelection}/>
                     </div>
-                    <div className="split center">
-                        <BlogPostDetails blogPost={this.state.selected}/>
+                    <div className="split center" data-testid='postDetails'>
+                        <BlogPostDetails blogPost={this.props.blogPosts[this.state.selectedIndex]}/>
                     </div>
-                    <div className="split right">
-                        <WordTable wordCountArray={this.state.selected.wordCounts}/>
+                    <div className="split right" data-testid='wordCountTable'>
+                        <WordTable wordCountArray={this.props.blogPosts[this.state.selectedIndex].wordCounts}/>
                     </div>
                 </React.Fragment>
             );
         }else{
-            return <div></div>
+            return <div data-testid='emptyapp'></div>
         }
     }
 

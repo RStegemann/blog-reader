@@ -9,15 +9,15 @@ export default class WordTable extends Component{
     render(){
         return(
             <React.Fragment>
-                <table>
+                <table data-testid='wordTable'>
                     <tbody>
                         <tr><th>Wort</th><th>Anzahl</th></tr>
                         {this.props.wordCountArray.map(wordCount =>
                             <tr key={this.props.wordCountArray.indexOf(wordCount)}>
-                                <td>
+                                <td data-testid={`wordCell-${wordCount[0]}`}>
                                     {wordCount[0]}
                                 </td>
-                                <td>
+                                <td data-testid={`countCell-${wordCount[0]}`}>
                                     {wordCount[1]}
                                 </td>
                             </tr>

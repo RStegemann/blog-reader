@@ -6,9 +6,12 @@
  * @param messageHandler Function handling received messages
  * @param errorHandler Function handling received messages
  */
-export default function Connect(address, openHandler, closeHandler, messageHandler, errorHandler)
+
+let exampleSocket;
+
+export function Connect(address, openHandler, closeHandler, messageHandler, errorHandler)
 {
-    const exampleSocket = new WebSocket(address);
+    exampleSocket = new WebSocket(address);
     exampleSocket.onopen = (event) =>{
         openHandler(event);
     }
@@ -21,4 +24,8 @@ export default function Connect(address, openHandler, closeHandler, messageHandl
     exampleSocket.onerror = (event) =>{
         errorHandler(event)
     }
+}
+
+export function Disconnect(){
+    if(exampleSocket !== undefined && exampleSocket.readyState > 0) exampleSocket.close();
 }
