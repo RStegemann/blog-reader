@@ -1,4 +1,12 @@
-export default function Connect(address, openHandler, closeHandler, messageHandler)
+/**
+ * Connect to a websocket at a given address and link event handlers
+ * @param address Websocket address ex.: ws://localhost:8080
+ * @param openHandler Function handling opening events
+ * @param closeHandler Function handling closing events
+ * @param messageHandler Function handling received messages
+ * @param errorHandler Function handling received messages
+ */
+export default function Connect(address, openHandler, closeHandler, messageHandler, errorHandler)
 {
     const exampleSocket = new WebSocket(address);
     exampleSocket.onopen = (event) =>{
@@ -10,12 +18,7 @@ export default function Connect(address, openHandler, closeHandler, messageHandl
     exampleSocket.onmessage = (event) =>{
         messageHandler(event);
     }
-    waitForConnection(exampleSocket)
-}
-
-function waitForConnection(socket){
-    setTimeout(function(){
-        if(socket.readyState !== 1)
-            waitForConnection(socket)
-    }, 5);
+    exampleSocket.onerror = (event) =>{
+        errorHandler(event)
+    }
 }

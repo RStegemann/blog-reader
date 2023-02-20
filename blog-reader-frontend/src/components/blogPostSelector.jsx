@@ -1,5 +1,8 @@
 import {Component} from "react";
 
+/**
+ * Represents a single Blogpost as a Button that shows title and excerpt of the post.
+ */
 export default class BlogPostSelector extends Component{
     render(){
         const{props} = this;

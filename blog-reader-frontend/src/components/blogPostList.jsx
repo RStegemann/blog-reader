@@ -1,11 +1,14 @@
-import {React, Component} from "react";
+import React, {Component} from "react";
 import BlogPostSelector from "./blogPostSelector";
 
+/**
+ * Represents a list of Blogposts and renders them as BlogPostSelector Components
+ */
 export default class BlogPostList extends Component{
 
     render(){
         return (
-            <div>
+            <React.Fragment>
                 {this.props.blogPosts.map(blogPost =>
                     <BlogPostSelector
                         key={blogPost.id}
@@ -13,7 +16,7 @@ export default class BlogPostList extends Component{
                         handleSelection={this.props.handleSelection}
                         index = {this.props.blogPosts.indexOf(blogPost)}
                     />)}
-            </div>
+            </React.Fragment>
         )
     }
 }

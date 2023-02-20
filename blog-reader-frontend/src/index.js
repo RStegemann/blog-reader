@@ -1,39 +1,82 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from './components/App';
 import Connect from './websocket';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 let blogPosts;
 
+// Connect to websocket
 Connect("ws://localhost:8080",
     onSocketOpened,
     OnSocketClosed,
-    OnSocketMessageReceived
+    OnSocketMessageReceived,
+    OnSocketError
 );
 
+/**
+ * Handler for socket opening events, just logs the connection for now
+ * @param event Event information, received from websocket
+ */
 function onSocketOpened(event){
     console.log("Connected.");
 }
 
+/**
+ * Handler for socket closing events
+ * @param event Event information, received from websocket
+ */
 function OnSocketClosed(event){
-    console.log("Disconnected");
+    // Failed to connect to websocket. Retrying after one second
+    Connect("ws://localhost:8080",
+        onSocketOpened,
+        OnSocketClosed,
+        OnSocketMessageReceived,
+        OnSocketError
+    );
 }
+
+/**
+ * Handler for socket errors
+ * @param event Event information, received from websocket
+ */
+function OnSocketError(event){
+    // Encountered error, some elaborate system might be applied here, but in this case we are just reconnecting.
+    Connect("ws://localhost:8080",
+        onSocketOpened,
+        OnSocketClosed,
+        OnSocketMessageReceived,
+        OnSocketError
+    );
+}
+
+/**
+ * Handler for received socket messages
+ * @param event Event information, received from websocket
+ */
 function OnSocketMessageReceived(event){
-    const parsedPosts = JSON.parse(event.data);
-    if(checkNewPosts(blogPosts, parsedPosts)){
-        console.log("Rendering.");
-        blogPosts = parsedPosts;
-        root.render(
-            <React.StrictMode>
-                <App blogPosts={blogPosts}/>
-            </React.StrictMode>
-        );
+    try{ // Try parsing event data as json, in case of syntax error the message gets ignored
+        const parsedPosts = JSON.parse(event.data);
+        if(checkNewPosts(blogPosts, parsedPosts)){ // If the data contained new posts, redraw the website
+            blogPosts = parsedPosts;
+            root.render(
+                <React.StrictMode>
+                    <App blogPosts={blogPosts}/>
+                </React.StrictMode>
+            );
+        }
+    }catch (syntaxError){
+        // Received incorrect json, ignoring result
     }
 }
 
+/**
+ * Compare received posts with list of currently known posts
+ * @param blogPosts Current posts
+ * @param parsedPosts Newly received posts
+ * @returns {boolean} True/False depending on whether the new Post List contained new data
+ */
 function checkNewPosts(blogPosts, parsedPosts){
     if(blogPosts === undefined || parsedPosts.length > blogPosts.length) return true;
     parsedPosts.forEach(parsedPost => {
@@ -43,9 +86,3 @@ function checkNewPosts(blogPosts, parsedPosts){
     });
     return false;
 }
-
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

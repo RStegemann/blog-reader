@@ -1,10 +1,14 @@
-import {Component} from "react";
+import React,{Component} from "react";
 
+/**
+ * Creates a table containing the columns 'word' and 'count' and fills it with data from the wordcount array of the
+ * selected post
+ */
 export default class WordTable extends Component{
 
     render(){
         return(
-            <div>
+            <React.Fragment>
                 <table>
                     <tbody>
                         <tr><th>Wort</th><th>Anzahl</th></tr>
@@ -20,7 +24,7 @@ export default class WordTable extends Component{
                         )}
                     </tbody>
                 </table>
-            </div>
+            </React.Fragment>
         );
     }
 }
