@@ -5,6 +5,7 @@ import spray.json.{JsValue, JsonParser}
 import spray.json.DefaultJsonProtocol.*
 import spray.json.*
 import model.PostJsonProtocol.postWithWordMapFormat
+import websocketservice.WebSocketServer
 
 import scala.collection.mutable
 
@@ -21,7 +22,6 @@ class Tests extends AnyFunSpec{
       assert(postWithMapArray(0).link == """https://www.thekey.academy/konfliktmanagement-in-4-schritten-zur-loesung/""")
       assert(postWithMapArray(0).title == """Konfliktmanagement: in 4 Schritten zur Lösung""")
       assert(postWithMapArray(0).content == """Some content""")
-      // Excerpt equals check fails despite being same somehow
       val json = postWithMapArray.toJson
       assert(json.toString != "")
     }

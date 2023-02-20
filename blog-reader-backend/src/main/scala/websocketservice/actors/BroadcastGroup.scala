@@ -20,6 +20,9 @@ object BroadcastGroup {
 class BroadcastGroup extends Actor{
   import BroadcastGroup._
 
+  /**
+   * Messages to receive
+   */
   def receive: Receive = {
     case Join =>
       clients += sender()
